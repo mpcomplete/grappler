@@ -11,14 +11,21 @@ public class Game : MonoBehaviour {
   }
 
   void Update() {
-    smartCamera.LookAt(player.transform);
+    if (player.CharacterController.isGrounded) {
+      smartCamera.LookAt(player.transform);
+    }
   }
 
   void FixedUpdate() {
+    float dt = Time.deltaTime;
+    Vector3 motion = Physics.gravity;
+
     if (Input.GetKey(KeyCode.A)) {
-      player.CharacterController.Move(-player.Speed * Time.deltaTime * Vector3.forward);
+      motion += -player.Speed * Vector3.forward;
     } else if (Input.GetKey(KeyCode.D)) {
-      player.CharacterController.Move(player.Speed * Time.deltaTime * Vector3.forward);
+      motion += player.Speed * Vector3.forward;
     }
+    player.Velocity += motion * dt;
+    player.CharacterController.Move(player.Velocity);
   }
 }
