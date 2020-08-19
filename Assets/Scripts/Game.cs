@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Game : MonoBehaviour {
   Player player;
   SmartCamera smartCamera;
+  Camera mainCamera;
   Ground ground;
 
   void Start() {
     player = FindObjectOfType<Player>();
     smartCamera = FindObjectOfType<SmartCamera>();
+    mainCamera = smartCamera.GetComponent<Camera>();
     ground = FindObjectOfType<Ground>();
+    Physics.IgnoreLayerCollision(player.gameObject.layer, player.gameObject.layer, true);
   }
 
   void Update() {
@@ -18,7 +22,12 @@ public class Game : MonoBehaviour {
     float dt = Time.fixedDeltaTime;
     Vector3 direction = Physics.gravity.normalized;
     Vector3 position = player.transform.position;
-    Ray downRay = new Ray(position + Vector3.up*.5f, direction);
+    Ray downRay = new Ray(position, direction);
+
+    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q)) {
+      Vector3 clickWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, smartCamera.Distance));
+      player.UseWhip(clickWorldPos);
+    }
 
     if (player.CharacterController.isGrounded && Physics.Raycast(downRay, out RaycastHit hit, 1f, 1<<ground.gameObject.layer)) {
       Vector3 normal = hit.normal.normalized;
@@ -37,6 +46,7 @@ public class Game : MonoBehaviour {
       Debug.Log("Airborne");
       player.Velocity += Physics.gravity * dt;
       player.CharacterController.Move(player.Velocity*dt);
+      player.Velocity = player.CharacterController.velocity;
       player.FrictionParticles.Stop();
     }
 
