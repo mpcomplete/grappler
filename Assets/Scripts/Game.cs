@@ -13,7 +13,7 @@ public class Game : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    float dt = Time.fixedDeltaTime;
+    float dt = Time.fixedDeltaTime*.1f;
     Vector3 direction = Physics.gravity.normalized;
     Vector3 position = player.transform.position;
     Ray downRay = new Ray(position, direction);
