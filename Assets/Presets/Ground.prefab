@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 854625438442464174}
   - component: {fileID: 8253356852627183840}
   - component: {fileID: 8732004994032502539}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,26 +52,46 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
+      inSlope: -0.393631
+      outSlope: -0.393631
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.047888014
+    - serializedVersion: 3
+      time: 0.6196644
+      value: -0.0023498535
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.11918642
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.8065917
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0012279
+      value: 0.22692995
+      inSlope: 2.7764611
+      outSlope: 2.7764611
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16024056
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Brick: {fileID: 0}
-  NumBricks: 0
+  NumSegments: 32
+  Height: 100
+  Length: 100
+  Thickness: 2
 --- !u!33 &854625438442464174
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99,7 +119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 1658e044206e94d608145419d1317859, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
