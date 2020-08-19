@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1351243605300971697}
   - component: {fileID: 7362811855388260016}
   - component: {fileID: 8215262247857605005}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4823,7 +4823,7 @@ GameObject:
   - component: {fileID: 2148831525869084240}
   - component: {fileID: 2148831525869084243}
   - component: {fileID: 2148831525869084241}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4861,7 +4861,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.2
+  m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2148831525869084241
@@ -4892,7 +4892,7 @@ GameObject:
   - component: {fileID: 2148831526332099606}
   - component: {fileID: 2148831526332099601}
   - component: {fileID: 2148831526332099600}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4989,7 +4989,7 @@ GameObject:
   - component: {fileID: 5858181069823783574}
   - component: {fileID: 1690958516808080923}
   - component: {fileID: 7944301838014450749}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
