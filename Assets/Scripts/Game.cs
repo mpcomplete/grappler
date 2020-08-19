@@ -2,24 +2,16 @@
 
 public class Game : MonoBehaviour {
   Player player;
-  Camera camera;
+  SmartCamera smartCamera;
 
-  public float CameraDistance = 20f;
 
   void Start() {
     player = FindObjectOfType<Player>();
-    camera = Camera.main;
+    smartCamera = FindObjectOfType<SmartCamera>();
   }
 
   void Update() {
-    // Update the camera
-    {
-      Vector3 position = player.transform.position;
-
-      position.x = CameraDistance;
-      camera.transform.position = position;
-      camera.transform.LookAt(player.transform);
-    }
+    smartCamera.LookAt(player.transform);
   }
 
   void FixedUpdate() {
