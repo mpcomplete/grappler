@@ -20,6 +20,8 @@ public class Game : MonoBehaviour {
     float dt = Time.deltaTime;
     Vector3 motion = Physics.gravity;
 
+    player.Velocity.x = 0;
+    player.Velocity.z = 0;
     if (Input.GetKey(KeyCode.A)) {
       motion += -player.Speed * Vector3.forward;
     } else if (Input.GetKey(KeyCode.D)) {
