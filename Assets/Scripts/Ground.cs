@@ -12,6 +12,7 @@ public class Ground : MonoBehaviour {
 		Generate();
 	}
 
+  [ContextMenu("Generate")]
 	private void Generate() {
 		GetComponent<MeshFilter>().mesh = mesh = new Mesh();
 

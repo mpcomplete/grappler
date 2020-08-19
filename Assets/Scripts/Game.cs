@@ -23,11 +23,12 @@ public class Game : MonoBehaviour {
 
       player.transform.forward = direction;
       player.transform.up = hit.normal;
-      player.Velocity = Vector3.Project(player.Velocity + dt * Physics.gravity, tangent);
-      player.CharacterController.Move(player.Velocity);
+      player.Velocity += Vector3.Project(dt * Physics.gravity, tangent);
       player.CharacterController.Move(-hit.normal * .1f);
+      player.CharacterController.Move(player.Velocity);
       player.FrictionParticles.Play();
     } else {
+      Debug.Log("Airborne");
       player.Velocity += Physics.gravity * dt;
       player.CharacterController.Move(player.Velocity);
       player.FrictionParticles.Stop();
