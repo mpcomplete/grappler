@@ -6,6 +6,7 @@ using UnityEngine;
 public class Ground : MonoBehaviour {
   public AnimationCurve Curve;
   public int NumSegments = 64;
+  public float Length = 100f;
   public float Thickness = 2f;
   Mesh mesh;
 
@@ -21,9 +22,9 @@ public class Ground : MonoBehaviour {
     Vector2[] uv = new Vector2[vertices.Length];
     for (int i = 0; i < NumSegments+1; i++) {
       float t = (float)i / (float)NumSegments;
-      vertices[3*i] = new Vector3(-1, Curve.Evaluate(t)*100f, t*100f);
-      vertices[3*i+1] = new Vector3(1, Curve.Evaluate(t)*100f, t*100f);
-      vertices[3*i+2] = new Vector3(1, Curve.Evaluate(t)*100f - Thickness, t*100f);
+      vertices[3*i] = new Vector3(-1, Curve.Evaluate(t)*Length, t*Length);
+      vertices[3*i+1] = new Vector3(1, Curve.Evaluate(t)*Length, t*Length);
+      vertices[3*i+2] = new Vector3(1, Curve.Evaluate(t)*Length - Thickness, t*Length);
 
       uv[3*i] = new Vector2(1, t);
       uv[3*i+1] = new Vector2(0, t);
