@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3933,7 +3933,7 @@ ParticleSystem:
         m_RotationOrder: 4
     maxLights: 20
   TrailModule:
-    enabled: 1
+    enabled: 0
     mode: 0
     ratio: 1
     lifetime:
@@ -4766,8 +4766,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100008, guid: 786dc3a14970613408f6ac80d35165b0, type: 3}
-  - {fileID: 2100002, guid: 36ed72df9b6f5de45819a1f02a1f034b, type: 3}
+  - {fileID: 2100000, guid: 19cd8e4ecfc73ed4aaa45a019d282664, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4880,6 +4879,7 @@ MonoBehaviour:
   CharacterController: {fileID: 2148831525869084243}
   Velocity: {x: 0, y: 0, z: 0}
   Speed: 20
+  FrictionParticles: {fileID: 7362811855388260016}
 --- !u!1 &2148831526332099602
 GameObject:
   m_ObjectHideFlags: 0
