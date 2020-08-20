@@ -23,9 +23,10 @@ public class Ground : MonoBehaviour {
     Vector2[] uv = new Vector2[vertices.Length];
     for (int i = 0; i < NumSegments+1; i++) {
       float t = (float)i / (float)NumSegments;
-      vertices[3*i] = new Vector3(-1, Curve.Evaluate(t)*Height, t*Length);
-      vertices[3*i+1] = new Vector3(1, Curve.Evaluate(t)*Height, t*Length);
-      vertices[3*i+2] = new Vector3(1, Curve.Evaluate(t)*Height - Thickness, t*Length);
+      float y = (Curve.Evaluate(t) - 1)*Height;
+      vertices[3*i] = new Vector3(-1, y, t*Length);
+      vertices[3*i+1] = new Vector3(1, y, t*Length);
+      vertices[3*i+2] = new Vector3(1, y - Thickness, t*Length);
 
       uv[3*i] = new Vector2(1, t);
       uv[3*i+1] = new Vector2(0, t);

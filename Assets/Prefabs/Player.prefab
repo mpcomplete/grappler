@@ -4880,6 +4880,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   Speed: 20
   FrictionParticles: {fileID: 7362811855388260016}
+  Whip: {fileID: 6139012345292446587, guid: df175ba2508cfda4094f079f165c0d77, type: 3}
 --- !u!1 &2148831526332099602
 GameObject:
   m_ObjectHideFlags: 0

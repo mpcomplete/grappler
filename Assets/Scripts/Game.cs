@@ -13,11 +13,12 @@ public class Game : MonoBehaviour {
     mainCamera = smartCamera.GetComponent<Camera>();
     ground = FindObjectOfType<Ground>();
     Physics.IgnoreLayerCollision(player.gameObject.layer, player.gameObject.layer, true);
+    Physics.IgnoreLayerCollision(player.gameObject.layer, 11, true);
   }
 
   void Update() {
   }
-  
+
   void FixedUpdate() {
     float dt = Time.fixedDeltaTime;
     Vector3 direction = Physics.gravity.normalized;
@@ -29,7 +30,8 @@ public class Game : MonoBehaviour {
       player.UseWhip(clickWorldPos);
     }
 
-    if (player.CharacterController.isGrounded && Physics.Raycast(downRay, out RaycastHit hit, 1f, 1<<ground.gameObject.layer)) {
+    if (player.IsWhipStuck) {
+    } else if (player.CharacterController.isGrounded && Physics.Raycast(downRay, out RaycastHit hit, 1f, 1<<ground.gameObject.layer)) {
       Vector3 normal = hit.normal.normalized;
       Vector3 tangent = new Vector3(0, -normal.z, normal.y);
 
@@ -40,10 +42,10 @@ public class Game : MonoBehaviour {
       player.Velocity = Vector3.Project(player.Velocity, tangent);
       player.CharacterController.Move(player.Velocity*dt);
       player.Velocity = player.CharacterController.velocity;
-      Debug.Log($"Grounded");
+      //Debug.Log($"Grounded");
       player.FrictionParticles.Play();
     } else {
-      Debug.Log("Airborne");
+      //Debug.Log("Airborne");
       player.Velocity += Physics.gravity * dt;
       player.CharacterController.Move(player.Velocity*dt);
       player.Velocity = player.CharacterController.velocity;
