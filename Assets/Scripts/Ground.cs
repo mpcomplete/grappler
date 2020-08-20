@@ -15,6 +15,32 @@ public class Ground : MonoBehaviour {
 		Generate();
 	}
 
+  float PHI = 1.61803398874989484820459f;
+  float goldNoise(Vector2 xy, float seed) {
+    return (Mathf.Tan(Vector2.Distance(xy*PHI, xy)*seed)*xy.x) % 1f;
+  }
+
+  float noise(Vector2 x) {
+    Vector2 uv = new Vector2(Mathf.Floor(x.x), Mathf.Floor(x.y));
+    Vector2 f = new Vector2(x.x % 1f, x.y % 1f);
+    f = f*f*(new Vector2(3f, 3f) - 2.0f*f);
+
+    float r1 = goldNoise(uv + new Vector2(0.5f, 0.5f), 1f);
+    float r2 = goldNoise(uv + new Vector2(1.5f, 0.5f), 1f);
+    float r3 = goldNoise(uv + new Vector2(0.5f, 1.5f), 1f);
+    float r4 = goldNoise(uv + new Vector2(1.5f, 1.5f), 1f);
+    return Mathf.Lerp(Mathf.Lerp(r1, r2, f.x), Mathf.Lerp(r3, r4, f.x), f.y);
+  }
+
+  float fbm(Vector2 p) {
+    float f = 0f;
+    f += 0.500000f*noise(p); p = p*2.02f;
+    f += 0.250000f*noise(p); p = p*2.03f;
+    f += 0.125000f*noise(p); p = p*2.01f;
+    f += 0.062500f*noise(p); p = p*2.04f;
+    return f/0.9375f;
+  }
+
   [ContextMenu("Generate")]
 	private void Generate() {
 		GetComponent<MeshFilter>().mesh = mesh = new Mesh();
@@ -23,7 +49,8 @@ public class Ground : MonoBehaviour {
     Vector2[] uv = new Vector2[vertices.Length];
     for (int i = 0; i < NumSegments+1; i++) {
       float t = (float)i / (float)NumSegments;
-      float y = (Curve.Evaluate(t) - 1)*Height;
+      //float y = (Curve.Evaluate(t) - 1)*Height;
+      float y = (fbm(new Vector2(t*3f, 0.1f)))*Height;
       vertices[3*i] = new Vector3(-1, y, t*Length);
       vertices[3*i+1] = new Vector3(1, y, t*Length);
       vertices[3*i+2] = new Vector3(1, y - Thickness, t*Length);
