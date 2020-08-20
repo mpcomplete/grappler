@@ -8,7 +8,9 @@ public class Player : MonoBehaviour {
   public ParticleSystem FrictionParticles;
   public Whip Whip = null;
 
-  public bool IsWhipStuck = false;
+  public bool IsWhipStuck { get => WhipRadius > 0f; }
+  public float WhipRadius = 0f;
+  public Vector3 WhipStuckTo { get => whip.transform.position; }
   Whip whip = null;
   Vector3 whipTarget = Vector3.zero;
 
@@ -18,31 +20,36 @@ public class Player : MonoBehaviour {
       whip.transform.position = transform.position + Vector3.up;
       whipTarget = targetPos;
       StartCoroutine(WhipRoutine());
+    } else {
+      WhipRadius = 0f;
+      Destroy(whip.gameObject);
+      whip = null;
     }
   }
 
   IEnumerator WhipRoutine() {
     float t = 0f;
     while (t < .5f) {
-      if (!whip.StuckToObject) {
-        whip.transform.position = Vector3.Lerp(whip.transform.position, whipTarget, 1 - Mathf.Pow(1e-5f, Time.deltaTime));
-      }
-      t += Time.deltaTime;
-      yield return null;
-    }
-
-    if (whip.StuckToObject) {
-      IsWhipStuck = true;
-    }
-    t = 0f;
-    while (t < .5f) {
       if (whip.StuckToObject) {
-        transform.position = Vector3.Lerp(transform.position, whip.transform.position, 1 - Mathf.Pow(1e-5f, Time.deltaTime));
+        break;
+
       }
+      whip.transform.position = Vector3.Lerp(whip.transform.position, whipTarget, 1 - Mathf.Pow(1e-5f, Time.deltaTime));
       t += Time.deltaTime;
       yield return null;
     }
-    IsWhipStuck = false;
+    if (whip.StuckToObject) {
+      t = 0f;
+      float distance = (whip.transform.position - transform.position).magnitude;
+      WhipRadius = distance;
+      while (t < .2f) {
+        WhipRadius = Mathf.Lerp(WhipRadius, distance*.5f, 1 - Mathf.Pow(1e-5f, Time.deltaTime));
+        t += Time.deltaTime;
+        yield return null;
+      }
+      yield break;
+    }
+    WhipRadius = 0f;
     Destroy(whip.gameObject);
     whip = null;
   }

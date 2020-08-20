@@ -31,6 +31,14 @@ public class Game : MonoBehaviour {
     }
 
     if (player.IsWhipStuck) {
+      Vector3 inwards = player.WhipStuckTo - player.transform.position;
+      Vector3 tangent = new Vector3(0, -inwards.z, inwards.y);
+      Vector3 accel = Vector3.Project(Physics.gravity, tangent);
+      player.Velocity += accel*dt;
+      player.Velocity = Vector3.Project(player.Velocity, tangent);
+      player.CharacterController.Move(player.Velocity*dt);
+      Vector3 inwardsNew = player.WhipStuckTo - player.transform.position;
+      player.transform.position = player.WhipStuckTo - player.WhipRadius*inwardsNew.normalized;
     } else if (player.CharacterController.isGrounded && Physics.Raycast(downRay, out RaycastHit hit, 1f, 1<<ground.gameObject.layer)) {
       Vector3 normal = hit.normal.normalized;
       Vector3 tangent = new Vector3(0, -normal.z, normal.y);
@@ -42,10 +50,10 @@ public class Game : MonoBehaviour {
       player.Velocity = Vector3.Project(player.Velocity, tangent);
       player.CharacterController.Move(player.Velocity*dt);
       player.Velocity = player.CharacterController.velocity;
-      //Debug.Log($"Grounded");
+      Debug.Log($"Grounded");
       player.FrictionParticles.Play();
     } else {
-      //Debug.Log("Airborne");
+      Debug.Log("Airborne");
       player.Velocity += Physics.gravity * dt;
       player.CharacterController.Move(player.Velocity*dt);
       player.Velocity = player.CharacterController.velocity;
