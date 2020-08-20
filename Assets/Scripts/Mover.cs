@@ -10,7 +10,7 @@ public class Mover : MonoBehaviour {
   public GroundState State = GroundState.Free;
 
   public static void Execute(Mover[] movers, Vector3 externalForces, float dt) {
-    const int substepCount = 1;
+    const int substepCount = 16;
     const float substepCountf = (float)substepCount;
     int count = movers.Length;
     float substepDt = dt / substepCountf;
@@ -30,7 +30,7 @@ public class Mover : MonoBehaviour {
     Vector3 predictedPositionDelta = predictedVelocity * dt;
     Vector3 predictedPosition = currentPosition + predictedPositionDelta;
 
-    int collisionCount = Physics.SphereCastNonAlloc(currentPosition, mover.Collider.radius, predictedHeading, hits, predictedPositionDelta.magnitude);
+    int collisionCount = Physics.SphereCastNonAlloc(currentPosition, mover.Collider.radius + .1f, predictedHeading, hits, predictedPositionDelta.magnitude);
 
     mover.Velocity = predictedVelocity;
     mover.transform.position = predictedPosition;
@@ -41,12 +41,10 @@ public class Mover : MonoBehaviour {
       Vector3 normal = hits[i].normal;
       Vector3 tangent = new Vector3(0, -normal.z, normal.y);
       Vector3 penetrationVector = hits[i].point - predictedPosition;
-      Vector3 radialCorrection = normal * mover.Collider.radius;
-      Vector3 correction = radialCorrection - Vector3.Project(penetrationVector + radialCorrection, hits[i].normal);
+      Vector3 correction = normal * (mover.Collider.radius - penetrationVector.magnitude);
 
-      Debug.DrawLine(hits[i].point, predictedPosition, Color.green);
-      Debug.DrawRay(predictedPosition, hits[i].normal, Color.blue);
-      Debug.DrawRay(predictedPosition, correction, Color.red);
+      Debug.Log(hits[i].point);
+      Debug.DrawRay(hits[i].point, correction, Color.green);
       mover.transform.position += correction;
       mover.Velocity = Vector3.Project(mover.Velocity, tangent);
     }

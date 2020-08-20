@@ -436,6 +436,10 @@ PrefabInstance:
       propertyPath: m_SkinWidth
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2148831526332099601, guid: 738d13578456c8d4390107565eee772a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6897017966384307168, guid: 738d13578456c8d4390107565eee772a, type: 3}
       propertyPath: m_Radius
       value: 0.5
