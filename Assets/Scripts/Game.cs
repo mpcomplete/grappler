@@ -17,18 +17,17 @@ public class Game : MonoBehaviour {
   }
 
   void Update() {
+    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q)) {
+      Vector3 clickWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, smartCamera.Distance));
+      player.UseWhip(clickWorldPos);
+    }
   }
 
   void FixedUpdate() {
     float dt = Time.fixedDeltaTime;
     Vector3 direction = Physics.gravity.normalized;
     Vector3 position = player.transform.position;
-    Ray downRay = new Ray(position, direction);
-
-    if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q)) {
-      Vector3 clickWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, smartCamera.Distance));
-      player.UseWhip(clickWorldPos);
-    }
+    Ray downRay = new Ray(position+player.transform.up*.25f, -player.transform.up);
 
     if (player.IsWhipStuck) {
       Vector3 inwards = player.WhipStuckTo - player.transform.position;
@@ -49,14 +48,13 @@ public class Game : MonoBehaviour {
       player.Velocity += accel*dt;
       player.Velocity = Vector3.Project(player.Velocity, tangent);
       player.CharacterController.Move(player.Velocity*dt);
-      player.Velocity = player.CharacterController.velocity;
-      Debug.Log($"Grounded");
+      player.CharacterController.Move(normal*-.1f);
+      //Debug.Log($"Grounded");
       player.FrictionParticles.Play();
     } else {
-      Debug.Log("Airborne");
+      Debug.Log($"Airborne {player.CharacterController.isGrounded}");
       player.Velocity += Physics.gravity * dt;
       player.CharacterController.Move(player.Velocity*dt);
-      player.Velocity = player.CharacterController.velocity;
       player.FrictionParticles.Stop();
     }
 
